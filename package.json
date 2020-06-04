@@ -5,7 +5,7 @@
   },
   "private": false,
   "description": "add html node and convert html",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "mako-tos",
   "main": "gatsby-node.js",
   "dependencies": {
