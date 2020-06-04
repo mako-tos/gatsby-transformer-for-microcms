@@ -58,7 +58,7 @@ describe("convertHtml", () => {
 
   test("apply microcms's img(w and h and alt is defined)", async () => {
     const $ = cheerio.load(
-      '<img src="https://images.microcms-assets.io/some.img?w=10&h=20" alt="title">'
+      '<img src="https://images.microcms-assets.io/some.img?w=10&h=20&fit=crop" alt="title">'
     );
     const html = convertHtml($, {
       useHljs: false,

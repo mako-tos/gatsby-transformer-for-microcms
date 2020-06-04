@@ -15,6 +15,34 @@ const applyHljs = ($) => {
 };
 
 /**
+ * microcmsの画像URLをresponsiveなsrcset用に作り直す
+ * @param {string} urlBase
+ * @param {Array<objct>} rectSet
+ * @param {object} orgParams
+ * @param {boolean} isWebp
+ * @returns {string} srcset
+ */
+const createImgSrcset = (urlBase, rectSet, orgParams, isWebp) => {
+  return rectSet
+    .map((rect) => {
+      const newUrl = new URL(urlBase);
+      newUrl.searchParams.set("w", rect.w);
+      newUrl.searchParams.set("h", rect.h);
+      orgParams.forEach((value, key) => {
+        if (key === "w" || key === "h" || key === "fm") {
+          return;
+        }
+        newUrl.searchParams.set(key, value);
+      });
+      if (isWebp) {
+        newUrl.searchParams.set("fm", "webp");
+      }
+      return `${newUrl.href} ${rect.w}w`;
+    })
+    .join(", ");
+};
+
+/**
  * convert from img to picture and sources and img
  * @param {Cheerio} $
  * @param {object} param1 (Optional)
@@ -27,9 +55,10 @@ const applyImg = ($, { sizes, loading }) => {
     const src = img.attribs.src;
     const url = new URL(src);
     const params = url.searchParams;
-    const urlBase = url.origin;
+    const urlBase = url.origin + url.pathname;
     const height = parseInt(params.get("h") || 0, 10);
     const width = parseInt(params.get("w") || 0, 10);
+
     if (height === 0 || width === 0) {
       return;
     }
@@ -39,20 +68,12 @@ const applyImg = ($, { sizes, loading }) => {
     });
 
     const $picture = $("<picture />");
-    const srcSetWebp = rectSet
-      .map((rect) => {
-        return `${urlBase}?w=${rect.w}&h=${rect.h}&fmt=webp ${rect.w}w`;
-      })
-      .join(", ");
+    const srcSetWebp = createImgSrcset(urlBase, rectSet, params, true);
     const webpSource = $("<source />");
     webpSource.attr("srcSet", srcSetWebp);
     $picture.append(webpSource);
 
-    const srcSet = rectSet
-      .map((rect) => {
-        return `${urlBase}?w=${rect.w}&h=${rect.h} ${rect.w}w`;
-      })
-      .join(", ");
+    const srcSet = createImgSrcset(urlBase, rectSet, params, false);
     const source = $("<source />");
     source.attr("srcSet", srcSet);
     $picture.append(source);
@@ -62,6 +83,7 @@ const applyImg = ($, { sizes, loading }) => {
     for (const key in img.attribs) {
       newImg.attr(key, img.attribs[key]);
     }
+    newImg.attr("srcset", srcSet); // fallback
     newImg.attr("sizes", sizes);
     newImg.attr("loading", loading);
     $picture.append(newImg);
