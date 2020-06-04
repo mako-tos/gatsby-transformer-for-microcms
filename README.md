@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/mako-tos/gatsby-transformer-for-microcms/badge.svg?branch=master)](https://coveralls.io/github/mako-tos/gatsby-transformer-for-microcms?branch=master)
+
 # gatsby-transformer-for-microcms
 
 ## Install
