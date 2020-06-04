@@ -10,7 +10,7 @@ async function sourceNodes(
   const { field } = pluginOptions;
   const promises = nodeList.map(async (node) => {
     const $ = cheerio.load(node[field] || "");
-    const html = $.find('body').html();
+    const html = $('body').html();
     const plainText = createPlainText($);
     const convertedHtml = convertHtml($, pluginOptions);
 

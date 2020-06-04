@@ -1,24 +1,24 @@
-const { sourceNodes } = require('../sourceNodes');
+const { sourceNodes } = require("../sourceNodes");
 
-jest.mock('../createPlainText', () => {
+jest.mock("../createPlainText", () => {
   return {
-    createPlainText: jest.fn().mockReturnValue('createPlainText called'),
+    createPlainText: jest.fn().mockReturnValue("createPlainText called"),
   };
 });
 
-jest.mock('../convertHtml', () => {
+jest.mock("../convertHtml", () => {
   return {
-    convertHtml: jest.fn().mockReturnValue('convertHtml called'),
+    convertHtml: jest.fn().mockReturnValue("convertHtml called"),
   };
 });
 
-jest.mock('cheerio', () => {
+jest.mock("cheerio", () => {
   return {
-    load: jest.fn().mockReturnValue({
-      find: jest.fn().mockReturnValue({
-        html: jest.fn().mockReturnValue('html string')
+    load: jest.fn().mockReturnValue(
+      jest.fn().mockReturnValue({
+        html: jest.fn().mockReturnValue("html string"),
       })
-    }),
+    ),
   };
 });
 
@@ -26,8 +26,8 @@ const actions = {
   createNode: jest.fn(),
   createParentChildLink: jest.fn(),
 };
-const createNodeId = jest.fn().mockReturnValue('nodeId');
-const createContentDigest = jest.fn().mockReturnValue('digest');
+const createNodeId = jest.fn().mockReturnValue("nodeId");
+const createContentDigest = jest.fn().mockReturnValue("digest");
 const getNode = jest.fn().mockReturnValue({});
 
 beforeEach(() => {
@@ -39,12 +39,12 @@ beforeEach(() => {
 });
 
 const pluginOptions = {
-  mediaType: 'blog',
-  field: 'headImage',
+  mediaType: "blog",
+  field: "headImage",
 };
 
-describe('sourceNodes', () => {
-  test('getNodesByType return no item', async () => {
+describe("sourceNodes", () => {
+  test("getNodesByType return no item", async () => {
     const getNodesByType = jest.fn().mockReturnValue([]);
     await sourceNodes(
       {
@@ -65,8 +65,8 @@ describe('sourceNodes', () => {
   });
 });
 
-describe('sourceNodes', () => {
-  test('getNodesByType return 1 item', async () => {
+describe("sourceNodes", () => {
+  test("getNodesByType return 1 item", async () => {
     const getNodesByType = jest.fn().mockReturnValue([{}]);
     await sourceNodes(
       {
@@ -87,8 +87,8 @@ describe('sourceNodes', () => {
   });
 });
 
-describe('sourceNodes', () => {
-  test('getNodesByType return 2 item', async () => {
+describe("sourceNodes", () => {
+  test("getNodesByType return 2 item", async () => {
     const getNodesByType = jest.fn().mockReturnValue([{}, {}]);
     await sourceNodes(
       {
