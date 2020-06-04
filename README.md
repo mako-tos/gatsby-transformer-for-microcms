@@ -1,8 +1,14 @@
 # gatsby-transformer-for-microcms
 
 ## Install
-
+with yarn
 ```sh
+$ yarn add @mako-tos/gatsby-transformer-for-microcms
+```
+
+with npm
+```sh
+$ npm i @mako-tos/gatsby-transformer-for-microcms
 ```
 
 ## How to use
@@ -15,7 +21,7 @@ You need setting options in `gatsby-config.js`.
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-transformer-for-microcms',
+      resolve: '@mako-tos/gatsby-transformer-for-microcms',
       options: {
         mediaType: 'MicrocmsBlog', // string
         field: 'body', // string
@@ -78,7 +84,7 @@ exports.createPages = async ({ graphql, actions }) => {
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-transformer-for-microcms',
+      resolve: '@mako-tos/gatsby-transformer-for-microcms',
       options: {
         /**
          * Target GraphQL Table Name (Required)
