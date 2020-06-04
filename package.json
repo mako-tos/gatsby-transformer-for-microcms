@@ -1,8 +1,5 @@
 {
   "name": "@mako-tos/gatsby-transformer-for-microcms",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "private": false,
   "description": "add html node and convert html",
   "version": "1.0.2",
