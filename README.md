@@ -1,4 +1,4 @@
-# gatsby-transformer-cheerio
+# gatsby-transformer-for-microcms
 
 ## Install
 
@@ -84,6 +84,7 @@ module.exports = {
          * Target GraphQL Table Name (Required)
          *
          * Type: string.
+         * default: undefined,
          **/
         mediaType: 'MicrocmsBlog',
 
@@ -91,6 +92,7 @@ module.exports = {
          * Table's html field Name (Required)
          *
          * Type: string.
+         * default: undefined,
          **/
         field: 'body',
 
@@ -98,8 +100,32 @@ module.exports = {
          * If you want to use Highlight.js set true (Optional)
          *
          * Type: boolean.
+         * default: false.
          **/
         useHljs: true,
+
+        /**
+         * If you want to update img tags set up (Optional)
+         *
+         * Type: object.
+         **/
+        image: {
+          /**
+           * If you want to set img tag's sizes set true (Optional)
+           *
+           * Type: string.
+           * default: '(max-width: 800px) 80vw, 800px'.
+           **/
+          sizes: '80vw',
+
+          /**
+           * If you want to set img tag's loading set true (Optional)
+           *
+           * Type: string.
+           * default: 'lazy'.
+           **/
+          loading: 'auto',
+        },
       },
     },
   ],
