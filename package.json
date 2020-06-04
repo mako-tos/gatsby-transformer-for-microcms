@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-transformer-for-microcms",
+  "name": "@mako-tos/gatsby-transformer-for-microcms",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -7,6 +7,7 @@
   "description": "add html node and convert html",
   "version": "0.0.2",
   "author": "mako-tos",
+  "main": "gatsby-node.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "eslint": "^7.1.0",
