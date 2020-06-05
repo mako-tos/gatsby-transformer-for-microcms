@@ -71,6 +71,7 @@ const applyImg = ($, { sizes, loading }) => {
     const srcSetWebp = createImgSrcset(urlBase, rectSet, params, true);
     const webpSource = $("<source />");
     webpSource.attr("srcSet", srcSetWebp);
+    webpSource.attr("type", "image/webp")
     $picture.append(webpSource);
 
     const srcSet = createImgSrcset(urlBase, rectSet, params, false);

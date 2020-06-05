@@ -48,6 +48,10 @@ describe("convertHtml", () => {
     const picture = $pictures.get(0);
     const $sources = $(picture).find("source");
     expect($sources.length).toBe(2);
+    const $sourceWebp = $($sources.get(0));
+    expect($sourceWebp.attr('type')).toBe("image/webp");
+    const $sourceOrg = $($sources.get(1));
+    expect($sourceOrg.attr('type')).toBe(undefined);
     $sources.each((idx, elem) => {
       expect($(elem).attr("srcset")).toBeTruthy();
     });
