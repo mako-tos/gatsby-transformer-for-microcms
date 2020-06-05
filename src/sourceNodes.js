@@ -12,7 +12,7 @@ async function sourceNodes(
     const $ = cheerio.load(node[field] || "");
     const html = $('body').html();
     const plainText = createPlainText($);
-    const convertedHtml = convertHtml($, pluginOptions);
+    const convertedHtml = await convertHtml($, pluginOptions);
 
     const newNode = {
       html,
