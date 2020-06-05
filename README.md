@@ -1,6 +1,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/mako-tos/gatsby-transformer-for-microcms/badge.svg?branch=master)](https://coveralls.io/github/mako-tos/gatsby-transformer-for-microcms?branch=master)
+![NPM](https://img.shields.io/npm/l/@mako-tos/gatsby-transformer-for-microcms)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mako-tos/gatsby-transformer-for-microcms)
+![npm (scoped)](https://img.shields.io/npm/v/@mako-tos/gatsby-transformer-for-microcms)
 
 # gatsby-transformer-for-microcms
+
+Handle imgs in [microCMS](https://microcms.io/)'s html field.
+Img tags become picture tag in your rich media content.
 
 ## Install
 with yarn
@@ -17,11 +23,21 @@ $ npm i @mako-tos/gatsby-transformer-for-microcms
 
 ### gatsby-config.js
 
+#### This npm is installed with [gatsby-source-microcms](https://github.com/wantainc/gatsby-source-microcms)
+
 You need setting options in `gatsby-config.js`.
 
 ```js
 module.exports = {
   plugins: [
+    {
+      resolve: 'gatsby-source-microcms',
+      options: {
+        apiKey: process.env.MICRO_CMS_API_KEY,
+        serviceId: process.env.MICRO_CMS_SERVICE_ID,
+        endpoint: 'blog',
+      },
+    },
     {
       resolve: '@mako-tos/gatsby-transformer-for-microcms',
       options: {
@@ -36,7 +52,8 @@ module.exports = {
 
 ### gatsby-node.js
 
-You can query like the following. .
+You can query like the following.
+@mako-tos/gatsby-transformer-for-microcms will append childConvertHtml to your table.
 
 ```js
 exports.createPages = async ({ graphql, actions }) => {
@@ -50,6 +67,7 @@ exports.createPages = async ({ graphql, actions }) => {
             node {
               id
               createdAt
+              body
               childConvertHtml {
                 html
                 plainText
