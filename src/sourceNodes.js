@@ -3,7 +3,7 @@ const { createPlainText } = require("./createPlainText");
 const { convertHtml } = require("./convertHtml");
 
 async function sourceNodes(
-  { actions, createNodeId, createContentDigest, getNode, getNodesByType },
+  { actions, createNodeId, createContentDigest, getNode, getNodesByType, reporter },
   pluginOptions
 ) {
   const nodeList = getNodesByType(pluginOptions.mediaType);
@@ -12,7 +12,7 @@ async function sourceNodes(
     const $ = cheerio.load(node[field] || "");
     const html = $('body').html();
     const plainText = createPlainText($);
-    const convertedHtml = await convertHtml($, pluginOptions);
+    const convertedHtml = await convertHtml($, pluginOptions, reporter);
 
     const newNode = {
       html,

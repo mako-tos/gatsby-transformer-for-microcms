@@ -29,6 +29,9 @@ const actions = {
 const createNodeId = jest.fn().mockReturnValue("nodeId");
 const createContentDigest = jest.fn().mockReturnValue("digest");
 const getNode = jest.fn().mockReturnValue({});
+const reporter = {
+  warn: jest.fn(),
+}
 
 beforeEach(() => {
   actions.createNode.mockClear();
@@ -36,6 +39,7 @@ beforeEach(() => {
   createNodeId.mockClear();
   createContentDigest.mockClear();
   getNode.mockClear();
+  reporter.warn.mockClear();
 });
 
 const pluginOptions = {
@@ -53,6 +57,7 @@ describe("sourceNodes", () => {
         createContentDigest,
         getNode,
         getNodesByType,
+        reporter,
       },
       pluginOptions
     );
@@ -62,6 +67,7 @@ describe("sourceNodes", () => {
     expect(createContentDigest.mock.calls.length).toBe(0);
     expect(getNode.mock.calls.length).toBe(0);
     expect(actions.createParentChildLink.mock.calls.length).toBe(0);
+    expect(reporter.warn.mock.calls.length).toBe(0);
   });
 });
 
@@ -75,6 +81,7 @@ describe("sourceNodes", () => {
         createContentDigest,
         getNode,
         getNodesByType,
+        reporter,
       },
       pluginOptions
     );
@@ -84,6 +91,7 @@ describe("sourceNodes", () => {
     expect(createContentDigest.mock.calls.length).toBe(1);
     expect(getNode.mock.calls.length).toBe(1);
     expect(actions.createParentChildLink.mock.calls.length).toBe(1);
+    expect(reporter.warn.mock.calls.length).toBe(0);
   });
 });
 
@@ -97,6 +105,7 @@ describe("sourceNodes", () => {
         createContentDigest,
         getNode,
         getNodesByType,
+        reporter,
       },
       pluginOptions
     );
@@ -106,5 +115,6 @@ describe("sourceNodes", () => {
     expect(createContentDigest.mock.calls.length).toBe(2);
     expect(getNode.mock.calls.length).toBe(2);
     expect(actions.createParentChildLink.mock.calls.length).toBe(2);
+    expect(reporter.warn.mock.calls.length).toBe(0);
   });
 });

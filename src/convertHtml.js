@@ -44,14 +44,33 @@ const createImgSrcset = (urlBase, rectSet, orgParams, isWebp) => {
 };
 
 /**
+ * 画像URLからサイズを取得する
+ * @param {string} imageUrl
+ * @param {object} reporter
+ */
+const getJsonByImageUrl = async (imageUrl, reporter) => {
+  try {
+    const fetchResult = await fetch(imageUrl + "?fm=json");
+    const json = await fetchResult.json();
+    const height = json.PixelHeight;
+    const width = json.PixelWidth;
+    return { height, width };
+  } catch (e) {
+    reporter.warn(`image not found: ${imageUrl}`);
+  }
+  return {};
+};
+
+/**
  * convert from img to picture and sources and img
  * @param {Cheerio} $
  * @param {object} param1 (Optional)
  * @param {string} param1.sizes
  * @param {string} param1.loading
+ * @param {object} reporter
  * @return {Cheerio} $
  */
-const applyImg = async ($, { sizes, loading }) => {
+const applyImg = async ($, { sizes, loading }, reporter) => {
   const promises = $('img[src^="https://images.microcms-assets.io"]')
     .map(async (idx, img) => {
       const src = img.attribs.src;
@@ -62,10 +81,12 @@ const applyImg = async ($, { sizes, loading }) => {
       let width = parseInt(params.get("w") || 0, 10);
 
       if (height === 0 || width === 0) {
-        const fetchResult = await fetch(urlBase + "?fm=json");
-        const json = await fetchResult.json();
-        height = json.PixelHeight;
-        width = json.PixelWidth;
+        const result = await getJsonByImageUrl(urlBase, reporter);
+        if (!result.width || !result.height) {
+          return;
+        }
+        height = result.height;
+        width = result.width;
       }
       const rates = [1 / 4, 1 / 2, 1, 2, 4];
       const rectSet = rates.map((rate) => {
@@ -111,16 +132,17 @@ const applyImg = async ($, { sizes, loading }) => {
  * @param {boolean} options.useHljs (Optional)
  * @param {string} options.image.sizes (Optional)
  * @param {string} options.image.loading (Optional) lazy|auto|eager
+ * @param {object} reporter
  * @returns {string} convertedHtml
  */
-const convertHtml = async ($, { useHljs = false, image = {} }) => {
+const convertHtml = async ($, { useHljs = false, image = {} }, reporter) => {
   const defaultOptions = {
     sizes: "(max-width: 800px) 80vw, 800px",
     loading: "lazy",
   };
   const { sizes, loading } = { ...defaultOptions, ...image };
 
-  $ = await applyImg($, { sizes, loading });
+  $ = await applyImg($, { sizes, loading }, reporter);
   if (useHljs) {
     $ = applyHljs($);
   }
