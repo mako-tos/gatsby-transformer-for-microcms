@@ -33,5 +33,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mako-tos/gatsby-transformer-for-microcms.git"
-  }
+  },
+  "files": [
+    "gatsby-node.js",
+    "src/onPreBootstrap.js",
+    "src/sourceNodes.js",
+    "src/convertHtml.js",
+    "src/createPlainText.js"
+  ]
 }
