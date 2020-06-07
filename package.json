@@ -2,7 +2,7 @@
   "name": "@mako-tos/gatsby-transformer-for-microcms",
   "private": false,
   "description": "add html node and convert html",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "author": "mako-tos",
   "main": "gatsby-node.js",
   "dependencies": {
