@@ -1,6 +1,7 @@
 const cheerio = require("cheerio");
 const { createPlainText } = require("./createPlainText");
 const { convertHtml } = require("./convertHtml");
+const { createListOfContents } = require('./createListOfContents');
 
 async function sourceNodes(
   { actions, createNodeId, createContentDigest, getNode, getNodesByType, reporter },
@@ -12,11 +13,13 @@ async function sourceNodes(
     const $ = cheerio.load(node[field] || "");
     const html = $('body').html();
     const plainText = createPlainText($);
+    const listOfContents = createListOfContents($);
     const convertedHtml = await convertHtml($, pluginOptions, reporter);
 
     const newNode = {
       html,
       plainText,
+      listOfContents,
       convertedHtml,
     };
 

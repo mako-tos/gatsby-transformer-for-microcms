@@ -6,6 +6,12 @@ jest.mock("../createPlainText", () => {
   };
 });
 
+jest.mock("../createListOfContents", () => {
+  return {
+    createListOfContents: jest.fn().mockReturnValue([{ id: 'abc', text: 'createListOfContents called', level: 1 }]),
+  };
+});
+
 jest.mock("../convertHtml", () => {
   return {
     convertHtml: jest.fn().mockReturnValue("convertHtml called"),

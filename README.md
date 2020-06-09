@@ -71,6 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
               childConvertHtml {
                 html
                 plainText
+                listOfContents
                 convertedHtml
               }
             }
@@ -157,3 +158,30 @@ module.exports = {
   ],
 };
 ```
+
+# Change History
+1.1.0 append listOfContents which generate ol tag from h* tags
+
+## example
+from
+```html
+<div>
+  <h1 id="h1id">title of article</h1>
+  ...
+  <h2 id="h2id">inner title</h2>
+  ...
+</div>
+```
+
+to
+```html
+<ol class="listOfContents">
+  <li class="listOfContents--level1">
+    <a href="#h1id">title of article</a>
+  </li>
+  <li class="listOfContents--level2">
+    <a href="#h2id">inner title</a>
+  </li>
+</ol>
+```
+I'm not good at design so I don't prepare css sorry.
